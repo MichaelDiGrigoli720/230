@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="utf-8" />
+			<title>Michael DiGrigoli Movies</title>
+			<style type="text/css">
+				h1,h2
+				{
+					font-family: verdana,tahoma,sans-serif;
+				}
+				body
+				{
+					margin-left: 10px;
+					margin-right: 10px;
+					background-color: #999;
+				}
+				#content
+				{
+					background-color: #ddd;
+					padding: 3px 10px 3px 10px;
+					width: 225px;
+				}
+				footer
+				{
+					display: block;
+					color: gray;
+					text-align: center;
+				}
+			</style>
+			<script>
+				function init()
+				{
+					var myH1 = document.querySelector("h1");
+					myH1.innerHTML = "Films!!!!!!";
+					var foot = document.querySelector("footer");
+					foot.innerHTML = "Copyright 2013 Michael DiGrigoli";
+					var para = document.querySelector("p");
+					para.innerHTML = "Welcome to Michael DiGrigoli's page!";
+					
+					myH1.style.color = "red";
+					myH1.style.backgroundColor = "yellow";
+					
+					// when #redButton is clicked call makered()
+					var redButton = document.querySelector("#redButton");
+					redButton.onclick = makeRed;
+					
+					document.querySelector("h1").setAttribute("title", "title creates tool tips");
+					
+					document.querySelector("a").setAttribute("href", "http://www.bing.com");
+				}
+				function makeRed()
+				{
+					document.querySelector("body").style.backgroundColor = "red";
+				}
+				window.onload = init;
+			</script>
+		</head>
+		<body>
+			<div id="content">
+				<h1>Movies!</h1>
+				<p>Welcome to my movie page!</p>
+				<h2>My favourites!</h2>
+				<ul>
+					<li>Shawshank Redemption</li>
+					<li>Summer Wars</li>
+					<li>Bakemono no Ko</li>
+				</ul>
+				<button id="redButton">Make red</button>
+				<p><a href="http://www.google.com">go to Google</a></p>
+				<footer>Copyright 2013 Nobody</footer>
+			</div>
+		</body>
+	</html>

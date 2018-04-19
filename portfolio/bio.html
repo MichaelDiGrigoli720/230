@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="utf-8" />
+			<link rel="stylesheet" type="text/css" href="css/styles.css" />
+			<title>About Me</title>
+			<style>
+				body
+				{
+					background-image: url(media/mass.png);
+					background-repeat: no-repeat;
+					background-color: white;
+				}
+			</style>
+			<script>
+				window.onload(init);
+				function init()
+				{
+					var str = "media/mass.png";
+					img = new Image();
+					img.src = str;
+				}
+			</script>
+		</head>
+		<body>
+			<h1 id="intro">About Me</h1>
+			<nav>
+			<div class="dropbtn"><a href="index.html">Home</a></div>
+			<div class="dropdown">
+				<button class="dropbtn">Skills</button>
+				<div class="dropdown-content">
+					<a href="coding.html">Coding Skills</a>
+					<a href="design.html">Design Skills</a>
+				</div>
+			</div>
+			
+			<div class="dropdown">
+			<button class="dropbtn">My Work</button>
+				<div class="dropdown-content">
+					<a href="game_work.html">Game Design Projects</a>
+					<a href="web_work.html">Web Design Projects</a>
+				</div>
+			</div>
+			
+			<div class="dropdown">
+				<button class="dropbtn">Me</button>
+				<div class="dropdown-content">
+					<a href="bio.html" id="current">About Me</a>
+					<a href="contact.html">Contact Me</a>
+				</div>
+			</div>
+			<div class="dropbtn"><a href="notes.html">Notes</a></div>
+			</nav>
+			<div id="welcome">
+				<p>
+					Hi, my name is Michael DiGrigoli. I am a second year student at Rochester Institute of technology. I was born in Greer, South Carolina and raised in Pittsfield, Berkshire County, Western Massachusetts. I graduated 5th in my class of 180 students from Taconic High School class of 2015.
+					I am currently working on my Game Design and Development degree and have yet to have any work in my field, but am eager to change that. I've loved video games since I first discovered them in elementary school, and have been coding since my freshman year in high school.
+					I'm good at what I do, although not exactly graceful -as I'm sure you can tell by this site- and I'd love to work for you.
+				</p>
+				<img src="media/me.jpg" title="Picture of me" alt="Picture of me" id="me"/>
+			</div>
+		</body>
+	</html>

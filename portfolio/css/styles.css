@@ -1,0 +1,182 @@
+
+@font-face {
+    font-family: 'akashiregular';
+    src: url('akashi-webfont.woff2') format('woff2'),
+         url('akashi-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'arvoregular';
+    src: url('arvo-regular-webfont.woff2') format('woff2'),
+         url('arvo-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body
+{
+	background-color: rgba(75,0,0,1);
+}
+
+#intro
+{
+	font-family: 'akashiregular';
+	width: 100%;
+	text-align: center;
+	font-size: 70px;
+	margin: auto;
+	background-color: white;
+	border: solid 1px;
+}
+
+.dropbtn
+{
+    background-color: rgb(175,0,0);
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+	display: inline-block;
+}
+.dropbtn a
+{
+	text-decoration: none;
+	color: white;
+}
+
+.dropbtn:hover
+{
+	background-color: rgb(150,0,0);
+}
+.dropbtn a:visited
+{
+	color: white;
+}
+
+.dropdown
+{
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content
+{
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a
+{
+    color: black;
+    padding: 6px 8px;
+    text-decoration: none;
+    display: block;
+	border: solid 1px;
+}
+
+.dropdown-content a:hover
+{
+	background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content
+{
+    display: block;
+}
+
+.dropdown:hover .dropbtn
+{
+    background-color: rgb(125,0,0);
+}
+
+
+nav
+{
+	width: 100%;
+	text-align: center;
+	background-color: rgba(125,0,0,0.3);
+	margin: auto;
+}
+
+#current
+{
+	background-color: #a3a3a3;
+}
+
+footer
+{
+	color: rgba(255,255,255,1);
+	clear: both;
+	background-color: black;
+	width: 20%;
+}
+
+#welcome
+{
+	width: auto;
+	background-color: rgba(200,0,0,0.95);
+	height: 100%;
+	border: solid 1px;
+	margin:2em;
+	padding-left: 10px;
+	padding-right: 10px;
+	font-family: 'arvoregular';
+}
+
+#contacts
+{
+	width: 100%;
+	text-align: left;
+	margin-top: 5px;
+	font-family: 'arvoregular';
+}
+#contacts ul
+{
+	border: solid 1px;
+	background-color: rgba(200,0,0,.3);
+	width: 35%;
+	margin: auto;
+}
+
+#contacts ul li
+{
+	margin: 1em;
+	color: white;
+}
+#contacts ul li a
+{
+	color: white;
+}
+#contacts ul li a:visited
+{
+	color: white;
+}
+
+#projects
+{
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	left: 20%;
+	right:20%;
+}
+#projects img
+{
+	border: solid 2px black;
+	margin: 5px;
+}
+
+#me
+{
+	position: fixed;
+	left: 37%;
+	margin: 5px;
+	border: solid 2px;
+}

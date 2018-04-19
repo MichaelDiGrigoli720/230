@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="utf-8" />
+			<title>Game Over</title>
+			<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+			<style>
+				#container
+				{
+					height: 2.5em;
+				}
+			</style>
+		</head>
+		<body>
+			<h1>Game Over</h1>
+			<div id="instructions">
+				<p id="instructionstext">
+					test
+				</p>
+			</div>
+			<div id="container">
+				<button name="start" onclick="location.href='index.html';" type=button>Play Again?</button>
+			</div>
+			<script>
+			function init()
+			{
+				var txt = document.getElementById("instructionstext");
+				var hs = "";
+				if(localStorage.getItem("highScore") == localStorage.getItem("score"))
+				{
+					hs = "Congratulations, new high score! \nHighScore: " + localStorage.getItem("highScore") + "\nYour Score: " + localStorage.getItem("score");
+				}
+				else
+				{
+					hs = "Too bad. You lost.\nHighScore: " + localStorage.getItem("highScore") + "\nYour Score: " + localStorage.getItem("score");
+				}
+				txt.innerHTML = hs;
+			}
+			window.onload = init;
+		</script>
+		</body>
+		
+	</html>

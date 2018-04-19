@@ -1,0 +1,7 @@
+<header>
+	<p>
+		Date: <!--#config timefmt="%B %d, %Y"--><!--#echo var="DATE_LOCAL"--><br />
+		IP self:<!--#echo var="REMOTE_ADDR"--> <br />
+		IP server: <!--#echo var="SERVER_ADDR"-->
+	</p>
+</header>

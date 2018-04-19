@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        svg { position:absolute }
+        #player { fill:red }
+    </style>
+    
+     <script>
+     
+     var svg, enemy, scoreElement, score;
+     
+	 var triangles = [];
+	 
+     function init(){
+	    svg = document.querySelector( 'svg' ),
+        xmlns = 'http://www.w3.org/2000/svg',
+        player = svg.children[ 0 ],
+        enemy = svg.children[1],
+        scoreElement = svg.children[2],
+        score = 0;
+        window.addEventListener( 'mousemove', hitTest );
+    
+    	positionEnemy();
+	}
+	
+    function positionEnemy() {
+      enemy.setAttribute( 'cx', Math.random() * window.innerWidth );
+      enemy.setAttribute( 'cy', Math.random() * window.innerHeight );
+    }
+    
+    function destroyEnemy() {
+      score += 10;
+      scoreElement.textContent = 'score: ' + score;
+      positionEnemy();
+	  spawnBlock();
+    }
+    
+    function hitTest( e ) {
+      player.setAttribute( 'cx', e.clientX + 'px' );
+      player.setAttribute( 'cy', e.clientY + 'px' );
+      
+      // bounding boxes
+      var playerBox = player.getBBox();
+      var enemyBox  = enemy.getBBox();
+	  var blockerBoxes = [];
+	  for(i = 0; i < triangles.length; i++)
+	  {
+		blockerBoxes.push(triangles[i].getBBox());
+	  }
+      
+      if( playerBox.x + playerBox.width >= enemyBox.x && playerBox.x < enemyBox.x + enemyBox.width ) { // horizontal hit
+        if( playerBox.y + playerBox.height >= enemyBox.y && playerBox.y < enemyBox.y + enemyBox.height ) { // vertical hit
+          destroyEnemy();
+        }
+      }
+	  
+	  else
+	  {
+		for(i = 0; i < blockerBoxes.length; i++)
+		{
+			if(playerBox.x + playerBox.width >= blockerBoxes[i].x && playerBox.x < blockerBoxes[i].x + blockerBoxes[i].width )
+			{
+				if( playerBox.y + playerBox.height >= blockerBoxes[i].y && playerBox.y < blockerBoxes[i].y + blockerBoxes[i].height )
+				{
+					alert("Game Over. Click to restart.");
+					location.reload();
+				}
+			}
+		}
+	  }
+    }
+	
+	function spawnBlock()
+	{
+		var tipX, tipY;
+		do
+		{
+			tipX = Math.random() * window.innerWidth;
+			tipY = Math.random() * window.innerHeight;
+		}while(tipX <= (parseFloat(player.getAttribute('cx')) + parseFloat(player.getAttribute('r'))) && tipX >= (parseFloat(player.getAttribute('cx')) - parseFloat(player.getAttribute('r'))) || tipY <= (parseFloat(player.getAttribute('cy')) + parseFloat(player.getAttribute('r'))) && tipY >= (parseFloat(player.getAttribute('cy')) - parseFloat(player.getAttribute('r'))));
+		var tri = document.createElementNS(xmlns, 'polygon');
+		tri.setAttribute('points', tipX + "," + tipY + " " + (tipX - 25) + "," + (tipY + 50) + " " + (tipX + 25) + "," + (tipY + 50));
+		triangles.push(tri);
+		svg.appendChild(tri);
+	}
+    
+    window.onload=init;
+   
+    </script>
+</head>
+<body>
+    <svg width='100%' height='100%'>
+        <circle id='player' r='50' cx='50%' cy='50%' />
+        <circle id='enemy' r='20' cx='0' cy='0' />
+        <text id="score" x="0" y="35" font-family="Verdana" font-size="35">
+          score: 0
+        </text>
+    </svg>
+    
+</body>
+
+</html>

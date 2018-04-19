@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+	<html lang = "en">
+		<head>
+			<meta charset="utf-8" />
+			<title>Space Invaders</title>
+			<style>
+				body
+				{
+					background-color: black;
+					background-image: url("media/ScreenshotStarfield.png");
+					margin: 0;
+				}
+			</style>
+		</head>
+		<body>
+			<audio autoplay loop>
+				<source src="media/NeonandKickboxing.mp3" type="audio/mpeg" />
+				Your browser does not support the audio element.
+			</audio>
+			<svg id="svg" width=100% height='750px'>
+				<text id="score" x="0" y="35" font-family="Verdana" font-size="35" fill="white">
+					score: 0
+				</text>
+				<g></g>
+			</svg>
+			
+			<script>
+			var xmlns = 'http://www.w3.org/2000/svg';
+			var svg = document.querySelector('svg');
+			var group = svg.querySelector('g');
+			var roundNum = 1;
+			var scoreElement = svg.children[0];
+			var score = 0;
+			var enemies = [];
+			var leftStart = window.innerWidth / 10;
+			var move = 0;
+			var increment = 1;
+			var budge = 0;
+			var drop = 0;
+			var bullets = [];
+			var bullCnt = 0;
+			var direction = true;
+			
+			var player = document.createElementNS(xmlns, 'polygon');
+			player.setAttribute('points', "700,700 735,700 735,680 745,680 745,700 780,700 780,730 700,730");
+			player.style.fill = "white";
+			svg.appendChild(player);
+			
+			window.addEventListener('keydown', Player);
+			function Player(e)
+			{
+				if(e.keyCode == 37)
+				{
+					move -= 10;
+					player.setAttribute('transform','translate(' + move + ',0)');
+				}
+				if(e.keyCode == 39)
+				{
+					move += 10;
+					player.setAttribute('transform','translate(' + move + ',0)');
+				}
+				if(e.keyCode == 32)
+				{
+					SpawnBullet();
+				}
+			}
+			
+			function SpawnEnemies()
+			{
+				var stage = 0;
+				for(j=1;j<roundNum+1;j++)
+				{
+					for(i = 2; i <= (9); i++)
+					{
+						enemies[stage] = document.createElementNS(xmlns, 'polygon');
+						enemies[stage].setAttribute('points',(i*leftStart) + "," + (j*50) + " " + (i*leftStart + 8) + "," + (j*50) + " " + (i*leftStart + 5) +"," + (j*50 - 5) + " " + (i*leftStart + 10) + "," + (j*50) + " " +(i*leftStart + 15) + "," + (j*50) + " " +(i*leftStart + 20) + "," + (j*50 - 5) + " " + (i*leftStart + 18) + "," + (j*50) + " " + (i*leftStart + 25) + "," + (j*50) + " " + (i*leftStart + 25) + "," + (j*50 + 13) + " " + (i*leftStart + 17) + "," + (j*50 + 13) + " " + (i*leftStart + 17) + "," + (j*50 + 9) + " " + (i*leftStart + 8) + "," + (j*50 + 9) + " " + (i*leftStart + 8) + "," + (j*50 + 13) + " " + (i*leftStart) + "," + (j*50 + 13));
+						enemies[stage].setAttribute('x', (i*leftStart));
+						enemies[stage].setAttribute('y', (j*50));
+						enemies[stage].style.fill = "white";
+						group.appendChild(enemies[stage]);
+						stage++;
+					}
+				}
+			}
+			SpawnEnemies();
+			
+			var moveUp = function()
+			{
+				var i = 0;
+				Array.prototype.forEach.call(bullets, function()
+											 {
+												var y = parseFloat(bullets[i].getAttribute('y'));
+												y-=7;
+												bullets[i].setAttribute('y',y);
+												if(y<-14)
+												{
+													bullCnt -= 1;
+													(bullets[i]).parentNode.removeChild(bullets[i]);
+													bullets.splice(i,1);
+													i--;
+												}
+												i++;
+											});
+			};
+			
+			var moveEnemies = function()
+			{
+				increment = roundNum * 2;
+				if(direction)
+				{
+					budge-=increment;
+					if(budge < -290)
+					{
+						direction = false;
+						drop+=50;
+					}
+				}
+				if(!direction)
+				{
+					budge+=increment;
+					if(budge > 100)
+					{
+						direction = true;
+						drop+=50;
+					}
+				}
+				group.setAttribute('transform','translate(' + budge + ',' + drop +')');
+			};
+			
+			var SpawnBullet = function()
+			{
+				bullets[bullCnt] = document.createElementNS(xmlns, 'rect');
+				bullets[bullCnt].setAttribute('x', '735');
+				bullets[bullCnt].setAttribute('y', '680');
+				bullets[bullCnt].setAttribute('width', '10');
+				bullets[bullCnt].setAttribute('height', '20');
+				bullets[bullCnt].style.fill = "white";
+				var x = parseFloat(bullets[bullCnt].getAttribute('x'));
+				bullets[bullCnt].setAttribute('x', (x+move));
+				svg.appendChild(bullets[bullCnt]);
+				bullCnt +=1;
+			};
+			
+			setInterval(function()
+								{
+									moveUp();
+									var playerBox = player.getBBox();
+									var enemyBoxes = [];
+									var bulletBoxes = [];
+									for(i = 0; i < enemies.length; i++)
+									{
+										enemyBoxes.push(enemies[i].getBBox());
+									}
+									for(i = 0; i < bullets.length; i++)
+									{
+										bulletBoxes.push(bullets[i].getBBox());
+									}
+									var enemyBox = group.getBBox();
+									
+									for(i = 0; i < enemyBoxes.length; i++)
+										{
+											if(playerBox.x + playerBox.width >= enemyBoxes[i].x + budge && playerBox.x < enemyBoxes[i].x + budge + enemyBoxes[i].width || enemyBox.y + drop > playerBox.y)
+											{
+												if( playerBox.y + playerBox.height >= enemyBoxes[i].y + drop && playerBox.y < enemyBoxes[i].y + drop + enemyBoxes[i].height || enemyBox.y + drop > playerBox.y)
+												{
+													if(score > localStorage.getItem("highScore"))
+													{
+														localStorage.setItem("highScore", score);
+														localStorage.setItem("score", score);
+													}
+													else
+													{
+														localStorage.setItem("score", score);
+													}
+													window.location.assign("gameOver.html");
+												}
+											}
+										}
+									for(j = 0; j < bulletBoxes.length; j++)
+									{
+										for(i = 0; i < enemyBoxes.length; i++)
+										{
+											if(bulletBoxes[j].x + bulletBoxes[j].width >= enemyBoxes[i].x + budge && bulletBoxes[j].x < enemyBoxes[i].x + budge + enemyBoxes[i].width )
+											{
+												if( bulletBoxes[j].y + bulletBoxes[j].height >= enemyBoxes[i].y + drop && bulletBoxes[j].y < enemyBoxes[i].y + drop + enemyBoxes[i].height )
+												{
+													(enemies[i]).parentNode.removeChild(enemies[i]);
+													enemies.splice(i,1);
+													bullCnt -= 1;
+													(bullets[j]).parentNode.removeChild(bullets[j]);
+													bullets.splice(j,1);
+													score += 100;
+													scoreElement.textContent = 'score: ' + score;
+												}
+											}
+										}
+									}
+									moveEnemies();
+									if(enemies.length  === 0)
+									{
+										roundNum++;
+										drop = 0;
+										budge = 0;
+										enemies = [];
+										SpawnEnemies();
+									}
+								},1000/60);
+		</script>
+			
+		</body>
+	</html>
